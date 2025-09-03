@@ -52,6 +52,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				scanner: {
+					primary: 'hsl(var(--scanner-primary))',
+					secondary: 'hsl(var(--scanner-secondary))',
+					success: 'hsl(var(--scanner-success))',
+					warning: 'hsl(var(--scanner-warning))',
+					danger: 'hsl(var(--scanner-danger))',
+					console: 'hsl(var(--scanner-console))',
+					terminal: 'hsl(var(--scanner-terminal))',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -67,6 +76,17 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			fontFamily: {
+				mono: ['JetBrains Mono', 'Monaco', 'Consolas', 'monospace'],
+			},
+			backgroundImage: {
+				'gradient-scanner': 'var(--gradient-scanner)',
+				'gradient-console': 'var(--gradient-console)',
+			},
+			boxShadow: {
+				'glow-scanner': 'var(--glow-scanner)',
+				'glow-accent': 'var(--glow-accent)',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -84,11 +104,18 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'scan-progress': {
+					'0%': { transform: 'translateX(-100%)' },
+					'50%': { transform: 'translateX(0%)' },
+					'100%': { transform: 'translateX(100%)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-glow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				'scan-progress': 'scan-progress 3s ease-in-out infinite',
 			}
 		}
 	},
