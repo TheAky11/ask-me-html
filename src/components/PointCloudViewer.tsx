@@ -111,7 +111,7 @@ export function PointCloudViewer({
     a.click();
     URL.revokeObjectURL(url);
   };
-  return <Card className="border-scanner-primary/20 h-[600px] flex flex-col">
+  return <Card className="border-scanner-primary/20 h-[800px] flex flex-col">
       <CardHeader className="pb-3 shrink-0">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">

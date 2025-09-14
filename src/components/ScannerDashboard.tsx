@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Play, Square, RotateCcw, Download, Zap, Eye } from "lucide-react";
+import { Play, Square, RotateCcw, Download, Zap, Eye, Settings } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { ScannerConsole } from "./ScannerConsole";
 import { PhotoPreview } from "./PhotoPreview";
 import { PointCloudViewer } from "./PointCloudViewer";
@@ -16,6 +17,7 @@ interface ScannerStatus {
   estimatedTime: number;
 }
 export function ScannerDashboard() {
+  const navigate = useNavigate();
   const [scannerStatus, setScannerStatus] = useState<ScannerStatus>({
     isScanning: false,
     progress: 0,
@@ -121,6 +123,14 @@ export function ScannerDashboard() {
           <p className="text-muted-foreground mt-2">Raspberry Pi 4 · Real-time 3D Scanning</p>
         </div>
         <div className="flex items-center gap-4">
+          <Button 
+            variant="outline" 
+            onClick={() => navigate('/settings')}
+            className="flex items-center gap-2"
+          >
+            <Settings className="w-4 h-4" />
+            Scanner Settings
+          </Button>
           <Badge variant="secondary" className={cn("px-4 py-2 text-sm font-medium", scannerStatus.isScanning && "animate-pulse-glow")}>
             <div className={cn("w-2 h-2 rounded-full mr-2", `bg-${getStatusColor()}`)} />
             {getStatusText()}
