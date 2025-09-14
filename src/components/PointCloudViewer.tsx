@@ -113,7 +113,25 @@ export function PointCloudViewer({
   };
   return <Card className="border-scanner-primary/20 h-[600px] flex flex-col">
       <CardHeader className="pb-3 shrink-0">
-        
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2">
+            <Eye className="w-5 h-5 text-scanner-primary" />
+            Real-time Point Cloud
+          </CardTitle>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="font-mono text-xs">
+              {pointsCollected.toLocaleString()} points
+            </Badge>
+            <Button variant="outline" size="sm" onClick={resetView}>
+              <RotateCw className="w-3 h-3 mr-1" />
+              Reset View
+            </Button>
+            <Button variant="outline" size="sm" onClick={exportPointCloud} disabled={pointsCollected === 0}>
+              <Download className="w-3 h-3 mr-1" />
+              Export
+            </Button>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className="flex-1 p-0">
         <div className="w-full h-full bg-gradient-to-br from-scanner-console to-background rounded-b-lg relative overflow-hidden">
