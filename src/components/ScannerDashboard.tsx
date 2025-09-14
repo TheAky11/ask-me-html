@@ -8,7 +8,6 @@ import { ScannerConsole } from "./ScannerConsole";
 import { PhotoPreview } from "./PhotoPreview";
 import { PointCloudViewer } from "./PointCloudViewer";
 import { cn } from "@/lib/utils";
-
 interface ScannerStatus {
   isScanning: boolean;
   progress: number;
@@ -16,7 +15,6 @@ interface ScannerStatus {
   pointsCollected: number;
   estimatedTime: number;
 }
-
 export function ScannerDashboard() {
   const [scannerStatus, setScannerStatus] = useState<ScannerStatus>({
     isScanning: false,
@@ -25,9 +23,7 @@ export function ScannerDashboard() {
     pointsCollected: 0,
     estimatedTime: 0
   });
-
   const [lastPhoto, setLastPhoto] = useState<string | null>(null);
-
   const startScan = () => {
     setScannerStatus(prev => ({
       ...prev,
@@ -38,7 +34,6 @@ export function ScannerDashboard() {
       estimatedTime: 300 // 5 minutes estimated
     }));
   };
-
   const stopScan = () => {
     setScannerStatus(prev => ({
       ...prev,
@@ -47,7 +42,6 @@ export function ScannerDashboard() {
       progress: 0
     }));
   };
-
   const resetScan = () => {
     setScannerStatus({
       isScanning: false,
@@ -66,7 +60,6 @@ export function ScannerDashboard() {
         setScannerStatus(prev => {
           const newProgress = Math.min(prev.progress + Math.random() * 2, 100);
           const newPoints = Math.floor(newProgress * 1000);
-          
           if (newProgress >= 100) {
             return {
               ...prev,
@@ -76,7 +69,6 @@ export function ScannerDashboard() {
               pointsCollected: newPoints
             };
           }
-          
           return {
             ...prev,
             progress: newProgress,
@@ -85,55 +77,51 @@ export function ScannerDashboard() {
           };
         });
       }, 100);
-
       return () => clearInterval(interval);
     }
   }, [scannerStatus.isScanning]);
-
   const getStatusColor = () => {
     switch (scannerStatus.status) {
-      case 'scanning': return 'scanner-primary';
-      case 'processing': return 'scanner-secondary';
-      case 'complete': return 'scanner-success';
-      case 'error': return 'scanner-danger';
-      default: return 'muted';
+      case 'scanning':
+        return 'scanner-primary';
+      case 'processing':
+        return 'scanner-secondary';
+      case 'complete':
+        return 'scanner-success';
+      case 'error':
+        return 'scanner-danger';
+      default:
+        return 'muted';
     }
   };
-
   const getStatusText = () => {
     switch (scannerStatus.status) {
-      case 'scanning': return 'Scanning...';
-      case 'processing': return 'Processing...';
-      case 'complete': return 'Complete';
-      case 'error': return 'Error';
-      default: return 'Ready';
+      case 'scanning':
+        return 'Scanning...';
+      case 'processing':
+        return 'Processing...';
+      case 'complete':
+        return 'Complete';
+      case 'error':
+        return 'Error';
+      default:
+        return 'Ready';
     }
   };
-
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
-
-  return (
-    <div className="min-h-screen bg-background p-6 space-y-6">
+  return <div className="min-h-screen bg-background p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold bg-gradient-scanner bg-clip-text text-transparent">
-            Laser Scanner Control
-          </h1>
+          <h1 className="text-4xl font-bold bg-gradient-scanner bg-clip-text text-transparent">PiLidar</h1>
           <p className="text-muted-foreground mt-2">Raspberry Pi 4 · Real-time 3D Scanning</p>
         </div>
         <div className="flex items-center gap-4">
-          <Badge 
-            variant="secondary" 
-            className={cn(
-              "px-4 py-2 text-sm font-medium",
-              scannerStatus.isScanning && "animate-pulse-glow"
-            )}
-          >
+          <Badge variant="secondary" className={cn("px-4 py-2 text-sm font-medium", scannerStatus.isScanning && "animate-pulse-glow")}>
             <div className={cn("w-2 h-2 rounded-full mr-2", `bg-${getStatusColor()}`)} />
             {getStatusText()}
           </Badge>
@@ -154,35 +142,16 @@ export function ScannerDashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
-                <Button
-                  variant="scanner"
-                  size="lg"
-                  onClick={startScan}
-                  disabled={scannerStatus.isScanning}
-                  className="h-12"
-                >
+                <Button variant="scanner" size="lg" onClick={startScan} disabled={scannerStatus.isScanning} className="h-12">
                   <Play className="w-4 h-4 mr-2" />
                   Start Scan
                 </Button>
-                <Button
-                  variant="destructive"
-                  size="lg"
-                  onClick={stopScan}
-                  disabled={!scannerStatus.isScanning}
-                  className="h-12"
-                >
+                <Button variant="destructive" size="lg" onClick={stopScan} disabled={!scannerStatus.isScanning} className="h-12">
                   <Square className="w-4 h-4 mr-2" />
                   Stop
                 </Button>
               </div>
-              <Button
-                variant="outline"
-                onClick={resetScan}
-                className="w-full"
-              >
-                <RotateCcw className="w-4 h-4 mr-2" />
-                Reset
-              </Button>
+              
             </CardContent>
           </Card>
 
@@ -197,10 +166,7 @@ export function ScannerDashboard() {
                   <span>Progress</span>
                   <span>{scannerStatus.progress.toFixed(1)}%</span>
                 </div>
-                <Progress 
-                  value={scannerStatus.progress} 
-                  className="h-3"
-                />
+                <Progress value={scannerStatus.progress} className="h-3" />
               </div>
               
               <div className="grid grid-cols-2 gap-4 text-sm">
@@ -221,27 +187,16 @@ export function ScannerDashboard() {
           </Card>
 
           {/* Photo Preview */}
-          <PhotoPreview 
-            lastPhoto={lastPhoto}
-            isScanning={scannerStatus.isScanning}
-          />
+          <PhotoPreview lastPhoto={lastPhoto} isScanning={scannerStatus.isScanning} />
         </div>
 
         {/* Center Column - Point Cloud */}
         <div className="lg:col-span-2">
-          <PointCloudViewer 
-            isScanning={scannerStatus.isScanning}
-            progress={scannerStatus.progress}
-            pointsCollected={scannerStatus.pointsCollected}
-          />
+          <PointCloudViewer isScanning={scannerStatus.isScanning} progress={scannerStatus.progress} pointsCollected={scannerStatus.pointsCollected} />
         </div>
       </div>
 
       {/* Console */}
-      <ScannerConsole 
-        isScanning={scannerStatus.isScanning}
-        status={scannerStatus.status}
-      />
-    </div>
-  );
+      <ScannerConsole isScanning={scannerStatus.isScanning} status={scannerStatus.status} />
+    </div>;
 }
